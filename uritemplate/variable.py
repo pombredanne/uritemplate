@@ -112,7 +112,7 @@ class URIVariable(object):
                 (name, {'explode': explode, 'prefix': prefix})
             )
 
-        self.variable_names = [name for (name, _) in self.variables]
+        self.variable_names = [varname for (varname, _) in self.variables]
 
     def post_parse(self):
         """Set ``start``, ``join_str`` and ``safe`` attributes.
@@ -335,12 +335,10 @@ class URIVariable(object):
             if expanded is not None:
                 return_values.append(expanded)
 
+        value = ''
         if return_values:
-            return {
-                self.original: self.start + self.join_str.join(return_values)
-            }
-
-        return {self.original: ''}
+            value = self.start + self.join_str.join(return_values)
+        return {self.original: value}
 
 
 def is_list_of_tuples(value):
@@ -349,10 +347,9 @@ def is_list_of_tuples(value):
 
     try:
         dict(value)
+        return True, value
     except:
         return False, None
-    else:
-        return True, value
 
 
 def list_test(value):

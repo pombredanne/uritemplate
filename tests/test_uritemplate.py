@@ -21,7 +21,7 @@ class RFCTemplateExamples(type):
     list_ex = {'list': ['red', 'green', 'blue']}
     keys = {'keys': [('semi', ';'), ('dot', '.'), ('comma', ',')]}
 
-    ## Level 1
+    # # Level 1
     # Simple string expansion
     level1_examples = {
         '{var}': {
@@ -34,7 +34,7 @@ class RFCTemplateExamples(type):
         },
     }
 
-    ## Level 2
+    # # Level 2
     # Reserved string expansion
     level2_reserved_examples = {
         '{+var}': {
@@ -67,7 +67,7 @@ class RFCTemplateExamples(type):
         },
     }
 
-    ## Level 3
+    # # Level 3
     # String expansion with multiple variables
     level3_multiple_variable_examples = {
         'map?{x,y}': {
@@ -164,7 +164,7 @@ class RFCTemplateExamples(type):
         }
     }
 
-    ## Level 4
+    # # Level 4
     # String expansion with value modifiers
     level4_value_modifier_examples = {
         '{var:3}': {
@@ -490,6 +490,12 @@ class TestURITemplate(RFCTemplateExamples('RFCMeta', (TestCase,), {})):
         d = {t: 1}
         d[u] += 1
         self.assertEqual(d, {t: 2})
+
+    def test_no_mutate(self):
+        args = {}
+        t = URITemplate('')
+        t.expand(args, key=1)
+        self.assertEqual(args, {})
 
 
 class TestURIVariable(TestCase):
